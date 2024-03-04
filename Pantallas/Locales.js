@@ -22,7 +22,7 @@ const Locales = () => {
 
   return (
     <>
-    <TouchableOpacity onPress={() => navigation.navigate('CrearPublicacionLocal')} style={styles.button}>
+    <TouchableOpacity onPress={() => navigation.navigate('CrearLocal')} style={styles.button}>
           <Text style={styles.buttonText}>Crear Publicación</Text>
     </TouchableOpacity>
     <ScrollView style={styles.container}>
@@ -32,7 +32,7 @@ const Locales = () => {
 
       {data.map((local) => (
         
-        <View style={styles.carta}>
+        <View style={styles.carta} key={local.id}>
               <Image style={styles.img} source={{ uri: local.img }} />
               <Text style={styles.text}>Nombre local: {local.name}</Text>
             

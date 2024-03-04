@@ -18,11 +18,7 @@ import Donaciones from './Pantallas/Donaciones';
 //import de react
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import DrawerContent from './Pantallas/DrawerContent';
 import React from 'react';
-import { getAuth, signOut } from 'firebase/auth';
-import { Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 
 //variables que inicia mi menu hamburguesa
@@ -30,10 +26,6 @@ const Drawer = createDrawerNavigator();
 
 
 const App = () => {
-
-  
-
-
 
   return (
     <NavigationContainer>

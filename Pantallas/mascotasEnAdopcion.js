@@ -31,8 +31,9 @@ const MascotasEnAdopcion = () => {
 
 
       {data.map((mascota) => (
-        
-        <View style={styles.carta}>
+          
+        <View style={styles.carta} key={mascota.id}>
+         
               <Image style={styles.img} source={{ uri: mascota.img }} />
               <Text style={styles.text}>Nombre mascota: {mascota.name}</Text>
               <Text style={styles.text}>Edad: {mascota.edad}</Text>
@@ -40,8 +41,9 @@ const MascotasEnAdopcion = () => {
               <Text style={styles.text}>Domicilio: {mascota.domicilio}</Text>
               <Text style={styles.text}>Telefono: {mascota.telefono}</Text>
               <Text style={styles.text}>descripcion: {mascota.descripcion}</Text>
+              
           </View>
-       
+          
       ))}
     </ScrollView>
     </>

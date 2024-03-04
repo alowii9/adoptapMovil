@@ -115,7 +115,7 @@ const styles = {
     imagen:{ 
       width: 350,
       height: 55,
-      position: 'center',
+      position: 'relative',
       marginBottom: 30,
       
     }

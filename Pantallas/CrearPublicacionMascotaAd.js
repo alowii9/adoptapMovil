@@ -3,9 +3,9 @@ import { View, Text, TextInput, Button, Image } from 'react-native';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { addDoc, collection } from 'firebase/firestore';
 import db from './Firebase/Config';
-import { launchImageLibraryAsync, MediaTypeOptions,launchCameraAsync,requestCameraPermissionsAsync } from 'expo-image-picker';
+import { launchImageLibraryAsync, MediaTypeOptions} from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import { Permissions } from 'react-native';
+
 
 const CrearPublicacionMascotaAd = () => {
   const [name, setName] = useState('');
@@ -52,51 +52,6 @@ const CrearPublicacionMascotaAd = () => {
     setUrlIMG(downloadURL);
   };
 
-
-
-/*
-  Quise probar esta funcion que era para abrir la camara y usar una foto sacada con ella, pero no me abre en la aplicacion :z
-// habia agregado un boton q llamaba a esta funcion , pero lo saque por no lo usaba
-
-  const handleImageUpload2 = async () => {
-    const options = {
-      mediaType: MediaTypeOptions.Images,
-      quality: 0.5,
-      allowsEditing: true,
-      aspect: [4, 3],
-    };
-  
-    const { status } = await requestCameraPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Permission to access camera was denied');
-      return;
-    }
-    
-  
-    const result = await launchCameraAsync(options);
-  
-    if (result.cancelled) {
-      console.log('User cancelled camera');
-      return;
-    }
-  
-    const imageUri = result.assets[0].uri;
-    const imageRef = ref(storage, `posteos/${imageUri.split('/').pop()}`); // Generate unique filename
-  
-    try {
-      const response = await fetch(imageUri);
-      const blob = await response.blob(); // Could be inefficient for larger images
-  
-      const uploadTask = await uploadBytes(imageRef, blob);
-      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-      setUrlIMG(downloadURL);
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      // Handle errors appropriately, e.g., display an error message to the user
-    }
-  };
-
-*/
 
 
 // esta funcion compruebo los datos y creo mi publicacion en mi firebase de publicacion de mascotas

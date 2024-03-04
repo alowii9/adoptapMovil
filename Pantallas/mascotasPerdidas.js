@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import db from './Firebase/Config';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const mascotasPerdidas = () => {
+const MascotasPerdidas = () => {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
 
@@ -32,7 +32,7 @@ const mascotasPerdidas = () => {
 
       {data.map((mascota) => (
         
-        <View style={styles.carta}>
+        <View style={styles.carta} key={mascota.id}>
               <Image style={styles.img} source={{ uri: mascota.img }} />
               <Text style={styles.text}>Nombre mascota: {mascota.name}</Text>
               <Text style={styles.text}>Edad: {mascota.edad}</Text>
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default mascotasPerdidas;
+export default MascotasPerdidas;

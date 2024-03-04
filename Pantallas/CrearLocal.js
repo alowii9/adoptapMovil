@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button,Image  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { addDoc, collection } from 'firebase/firestore';
 import db from './Firebase/Config';
-import ImagePicker from 'react-native-image-picker';
-
-
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 
 
 const CrearLocal = () => {
@@ -15,81 +13,71 @@ const CrearLocal = () => {
   const [domicilio, setDomicilio] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [urlIMG, setUrlIMG] = useState('');
-  const navigation = useNavigation();
 
+
+
+  const navigation = useNavigation();
   const storage = getStorage()
 
   const handleImageUpload = async () => {
     const options = {
-      title: 'Seleccionar Imagen',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+      mediaType: MediaTypeOptions.Images,
+      quality: 0.5,
+      allowsEditing: true,
+      aspect: [4, 3],
     };
 
-    ImagePicker.showImagePicke(options, async (response) => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else {
-          const refArchivoIMG = ref(storage, `posteos/${response.fileName}`);
-          await uploadFile(refArchivoIMG, response.uri);
-          const url = await getDownloadURL(refArchivoIMG);
-          setUrlIMG(url);
-        }
-      });
+    const result = await launchImageLibraryAsync(options);
+
+    if (result.cancelled) {
+      console.log('User cancelled image picker');
+      return;
+    }
+
+    const uri = result.assets[0].uri;
+    const imageRef = ref(storage, `posteos/${uri}`);
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const contentType = blob.type;
+
+    const metadata = {
+      contentType: contentType
     };
-  
+
+    const uploadTask = await uploadBytes(imageRef, blob, metadata);
+
+    const downloadURL = await getDownloadURL(uploadTask.ref);
+    setUrlIMG(downloadURL);
+  };
 
 
 
 
-  const crearPublicacionMascota = async () => {
+  const crearPublicacionLocal = async () => {
+    if (!name  || !domicilio || !Telefono || !descripcion) {
+      alert('Error al crear la publicación. Verifica los campos.');
+      return;
+    }
+
     const publicacion = {
       name,
+     
       domicilio,
-      Telefono,
+     Telefono,
       descripcion,
       img: urlIMG,
     };
 
-    if( !name || !edad || !domicilio || !raza || !descripcion  ) {
-      MSJERROR();
-   
-
-  }else{
-    await addDoc(collection(db, 'mascotas'), publicacion);
-    MSJOK();
-    navigation.navigate('MascotasEnAdopcion');
-  }
-
-  };
-
-
-
-
-
-  const MSJOK = () => {
-    alert('Publicación creada con éxito!');
-  };
-
-  const MSJERROR = () => {
-    alert('Error al crear la publicación. Verifica los campos.');
-  };
-
-/*
-  useEffect(() => {
-    if (name !== '') {
-      window.location.reload();
+    try {
+      await addDoc(collection(db, 'Locales'), publicacion);
+      alert('Publicación creada con éxito!');
+      navigation.navigate('Locales');
+    } catch (error) {
+      console.error('Error creating publication:', error);
     }
-  }, [name]);
-*/
+  };
+
  
-
-
-
 
 
 
@@ -123,9 +111,10 @@ const CrearLocal = () => {
         value={descripcion}
         onChangeText={(text) => setDescripcion(text)}
       />
+      <Image style={{ alignSelf: 'center', height: 200, width: 200 }} source={{ uri: urlIMG }} />
       <Button title='Subir Imagen' onPress={handleImageUpload} ></Button>
-      {urlIMG && <Image source={{ uri: urlIMG }} style={styles.imagePreview} />}
-      <Button title="Crear Publicación" onPress={crearPublicacionMascota} />
+    
+      <Button title="Crear Publicación" onPress={crearPublicacionLocal} />
     </View>
   );
 };

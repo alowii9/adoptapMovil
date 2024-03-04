@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { Image, Text, View } from 'react-native';
 
 const Home = () => {
@@ -90,12 +89,12 @@ const h1 = {
 const h1b = {
   textAlign: "center",
   paddingTop: "20px",
-  color: "White",
-  webkitTextStroke: '1px black',
+  
+ 
 }
 
 const BlancoText = {
-  color: "White",
+  
   textAlign: "center",
   
 }
@@ -108,13 +107,13 @@ const liStyle = {
 };
 
 const ulStyle = {
-  listStyle: 'none',
-  display: 'grid'
+ 
+  display: 'flex'
 };
 
 const foto2 = {
-  border: "black 5px solid",
-  borderImageSlice: "27 ",
+  
+ 
   marginLeft: "50px",
   display: 'flex',
 

@@ -3,9 +3,9 @@ import { View, Text, TextInput, Button, Image } from 'react-native';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { addDoc, collection } from 'firebase/firestore';
 import db from './Firebase/Config';
-import { launchImageLibraryAsync, MediaTypeOptions,launchCameraAsync,requestCameraPermissionsAsync } from 'expo-image-picker';
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import { Permissions } from 'react-native';
+
 
 const CrearPublicacionMascotaPer = () => {
   const [name, setName] = useState('');
